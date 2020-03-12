@@ -14,7 +14,7 @@ from django.shortcuts import render
 from django.db.models import Q
 
 
-#@login_required
+@login_required
 def count_page(request):
 
     today = date.today()
@@ -28,22 +28,22 @@ def count_page(request):
         electric = request.POST['electric']
         water_h = request.POST['water_h']
         water_c = request.POST['water_c']
-        waste = int(water_h) + int(water_c)
-        waste_count = int(waste) - int(com_last.waste)
+        waste = float(water_c) - float(water_h)
+        #waste_count = float(waste) - float(com_last.waste)
         pay_date = date.today()
         com_count = Com(electric=electric, water_h=water_h, water_c=water_c, waste=waste, date=pay_date)
         com_count.save()
         com_count.clean()
 
         # count data
-        electric_count = int(electric) - int(com_last.electric)
-        water_h_count = int(water_h) - int(com_last.water_h)
-        water_c_count = int(water_c) - int(com_last.water_c)
+        electric_count = float(electric) - float(com_last.electric)
+        water_h_count = float(water_h) - float(com_last.water_h)
+        water_c_count = float(water_c) - float(com_last.water_c)
 
-        electric_bill = int(com_cost.electric_cost) * int(electric_count)
-        water_h_bill = int(com_cost.water_h_cost) * int(water_h_count)
-        water_c_bill = int(com_cost.water_c_cost) * int(water_c_count)
-        waste_bill = int(com_cost.waste_cost) * int(waste_count)
+        electric_bill = float(com_cost.electric_cost) * float(electric_count)
+        water_h_bill = float(com_cost.water_h_cost) * float(water_h_count)
+        water_c_bill = float(com_cost.water_c_cost) * float(water_c_count)
+        waste_bill = float(com_cost.waste_cost) * float(waste)
         total_bill = electric_bill + water_h_bill + water_c_bill + waste_bill
 
         messages.success(request, 'Комуналка посчитана! ')
@@ -56,21 +56,5 @@ def count_page(request):
     return render(request, 'count_page/count_page.html', locals())
 
 
-def add_com_action(request):
-
-    if request.method == "POST":
-        print(request.POST)
-        electric = request.POST['electric']
-        water_h = request.POST['water_h']
-        water_c = request.POST['water_c']
-        pay_date = date.today()
-
-        com_count = Com(electric=electric, water_h=water_h, water_c=water_c, date=pay_date)
-        com_count.save()
-        com_count.clean()
-        print(request.POST)
-        messages.info(request, 'Комуналка посчитана!')
-
-        return count_page(request)
 
 
