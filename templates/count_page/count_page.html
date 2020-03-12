@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Firewall-cmd Web Administration Panel</title>
+
+  <!-- Custom fonts for this template-->
+  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{% static "style.css" %}">
+
+</head>
+
+<body id="page-top">
+
+<h1 class="h2 text-gray-900 mb-4 text-center">Подсчет коммунальных расходов</h1>
+
+<div class="container">
+        <div class="row">
+
+            <p></p>
+
+            <div class="col-lg-4 offset-lg-4">
+                <h4 class="small font-weight-bold">Сегодня {{ today }}</h4>
+            </div>
+        </div>
+
+        <div class="btn-group btn-group-lg" role="group" aria-label="menu">
+
+<p></p>
+        <form action="{% url 'admin:index' %}">
+            <button type="submit" class="btn btn-danger">Панель администратора</button>
+        </form>
+        </div>
+
+<p></p>
+
+
+<div class="col-xs-12" style="height:25px;"></div>
+
+<div>
+
+
+
+            <form action='{% url 'add_com_action' %}' method='POST'>{% csrf_token %}
+                <div class=""><input type="text" name="electric" class="form-control" placeholder="Электричество" /></div>
+                <p></p>
+                <div class=""><input type="text" name="water_h" class="form-control" placeholder="Горячая вода" /></div>
+                <p></p>
+                <div class=""><input type="text" name="water_c" class="form-control" placeholder="Холодная вода" /></div>
+    <p></p>
+                <p></p>
+                <button type="submit" class="btn btn-success">Посчитать</button>
+            </form>
+
+
+</div>
+
+<p class="row"></p>
+
+        <p></p>
+        <div class="col-xs-12" style="height:25px;"></div>
+
+
+{% if messages %}<div class="alert alert-success">
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+    </div>
+{% endif %}
+
+
+<p></p>
+
+
+<p></p>
+
+</div>
+
+
+</div>
+
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+</body>
+</html>

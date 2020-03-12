@@ -1,0 +1,48 @@
+<!-- templates/home.html-->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+
+        <div class="col-12">
+            <form action="{% url 'admin:index' %}">
+            <button type="submit" class="btn btn-danger">Admin Panel</button>
+            </form>
+        </div>
+
+        <p></p>
+
+        <div class="col-12">
+            <form action="{% url 'landing' %}">
+            <button type="submit" class="btn btn-success">Firewall Rules Panel</button>
+            </form>
+        </div>
+
+        <p></p>
+
+        <div class="col-12">
+            <form action="{% url 'ovpn_users' %}">
+            <button type="submit" class="btn btn-success">OpenVPN Users Panel</button>
+            </form>
+        </div>
+
+        <p></p>
+        <p></p>
+
+        <div class="col-12">
+            <form action="{% url 'logout' %}">
+            <button type="submit" class="btn btn-primary">Logout</button>
+            </form>
+        </div>
+{% else %}
+  <p>You are not logged in</p>
+        <div class="col-12">
+        <form action="{% url 'login' %}">
+            <button type="submit" class="btn btn-primary">Log in</button>
+        </form>
+        </div>
+{% endif %}
+{% endblock %}
