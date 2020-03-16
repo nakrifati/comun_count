@@ -46,7 +46,8 @@ def count_page(request):
         waste_bill = float(com_cost.waste_cost) * float(waste)
         internet_bill = 470
         total_com_bill = electric_bill + water_h_bill + water_c_bill + waste_bill
-        total_bill = electric_bill + water_h_bill + water_c_bill + waste_bill / 3
+        total_bill = total_com_bill / 3
+        total_bill_oleg = total_bill + 157
 
 
         messages.success(request, 'Комуналка посчитана! ')
@@ -54,8 +55,9 @@ def count_page(request):
         messages.success(request, 'Горячая вода: ' + str(water_h_bill) + 'руб.')
         messages.success(request, 'Холодная вода: ' + str(water_c_bill) + 'руб.')
         messages.success(request, 'Канализация: ' + str(waste_bill) + 'руб.')
-        messages.success(request, 'Всего комуналка: ' + str(total_com_bill) + 'руб.')
-        messages.success(request, 'Всего + интернет на 3их: ' + str(total_bill) + 'руб.')
+        messages.success(request, 'Всего комуналка: ' + str(("%.2f" % total_com_bill)) + 'руб.')
+        messages.success(request, 'К оплате Олегу: ' + str(("%.2f" % total_bill_oleg)) + 'руб.')
+        messages.success(request, 'К оплате Стаси: ' + str(("%.2f" % total_bill)) + 'руб.')
 
     return render(request, 'count_page/count_page.html', locals())
 
