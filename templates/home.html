@@ -9,23 +9,15 @@
 
         <div class="col-12">
             <form action="{% url 'admin:index' %}">
-            <button type="submit" class="btn btn-danger">Admin Panel</button>
+            <button type="submit" class="btn btn-danger">Панель администратора</button>
             </form>
         </div>
 
         <p></p>
 
         <div class="col-12">
-            <form action="{% url 'landing' %}">
-            <button type="submit" class="btn btn-success">Firewall Rules Panel</button>
-            </form>
-        </div>
-
-        <p></p>
-
-        <div class="col-12">
-            <form action="{% url 'ovpn_users' %}">
-            <button type="submit" class="btn btn-success">OpenVPN Users Panel</button>
+            <form action="{% url 'count_page' %}">
+            <button type="submit" class="btn btn-success">Начать подсчет</button>
             </form>
         </div>
 
