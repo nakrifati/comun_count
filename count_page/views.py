@@ -29,6 +29,8 @@ def count_page(request):
         water_h = request.POST['water_h']
         water_c = request.POST['water_c']
         waste = float(water_c) - float(water_h)
+        if waste < 0:
+            waste = abs(waste)
         #waste_count = float(waste) - float(com_last.waste)
         pay_date = date.today()
         com_count = Com(electric=electric, water_h=water_h, water_c=water_c, waste=waste, date=pay_date)
@@ -37,8 +39,14 @@ def count_page(request):
 
         # count data
         electric_count = float(electric) - float(com_last.electric)
+        if electric_count < 0:
+            electric_count = abs(electric_count)
         water_h_count = float(water_h) - float(com_last.water_h)
+        if water_h_count < 0:
+            water_h_count = abs(water_h_count)
         water_c_count = float(water_c) - float(com_last.water_c)
+        if water_c_count < 0:
+            water_c_count = abs(water_c_count)
 
         electric_bill = float(com_cost.electric_cost) * float(electric_count)
         water_h_bill = float(com_cost.water_h_cost) * float(water_h_count)
@@ -48,7 +56,7 @@ def count_page(request):
         total_com_bill = electric_bill + water_h_bill + water_c_bill + waste_bill
         total_bill = total_com_bill / 3
         total_bill_oleg = total_bill + 157
-
+        total_bil_stasya = total_bill - 314
 
         messages.success(request, 'Комуналка посчитана! ')
         messages.success(request, 'Свет: ' + str(electric_bill) + 'руб.')
@@ -56,8 +64,8 @@ def count_page(request):
         messages.success(request, 'Холодная вода: ' + str(water_c_bill) + 'руб.')
         messages.success(request, 'Канализация: ' + str(waste_bill) + 'руб.')
         messages.success(request, 'Всего комуналка: ' + str(("%.2f" % total_com_bill)) + 'руб.')
-        messages.success(request, 'К оплате Олегу: ' + str(("%.2f" % total_bill_oleg)) + 'руб.')
-        messages.success(request, 'К оплате Стаси: ' + str(("%.2f" % total_bill)) + 'руб.')
+        messages.success(request, 'Олег переводит Леше: ' + str(("%.2f" % total_bill_oleg)) + 'руб.')
+        messages.success(request, 'Стася переводит Леше: ' + str(("%.2f" % total_bil_stasya)) + 'руб.')
 
     return render(request, 'count_page/count_page.html', locals())
 
