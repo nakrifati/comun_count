@@ -33,9 +33,6 @@ def count_page(request):
             waste = abs(waste)
         #waste_count = float(waste) - float(com_last.waste)
         pay_date = date.today()
-        com_count = Com(electric=electric, water_h=water_h, water_c=water_c, waste=waste, date=pay_date)
-        com_count.save()
-        com_count.clean()
 
         # count data
         electric_count = float(electric) - float(com_last.electric)
@@ -57,6 +54,11 @@ def count_page(request):
         total_bill = total_com_bill / 3
         total_bill_oleg = total_bill + 157
         total_bil_stasya = total_bill - 314
+
+        com_count = Com(electric=electric, water_h=water_h, water_c=water_c, waste=waste,
+                        last_bill=total_com_bill, date=pay_date)
+        com_count.save()
+        com_count.clean()
 
         messages.success(request, 'Комуналка посчитана! ')
         messages.success(request, 'Свет: ' + str(electric_bill) + 'руб.')

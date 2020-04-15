@@ -8,9 +8,10 @@ class Com(models.Model):
     water_c = models.CharField(max_length=256, default='')
     waste = models.CharField(max_length=256, default='')
     date = models.DateField()
+    last_bill = models.CharField(max_length=256, default='')
 
     def __str__(self):
-        return "%s %s %s %s %s" % (self.electric, self.water_h, self.water_c, self.waste, self.date)
+        return "%s %s %s %s %s %s" % (self.electric, self.water_h, self.water_c, self.waste, self.date, self.last_bill)
 
 
 class ComCost(models.Model):
